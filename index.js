@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ) {
       let tableRow = `
       <tr>
-      <td>${myParsedData[eachTodoItem]}</td>
+      <td>${myParsedData[eachTodoItem]} <button onClick="deleteFunction('${myParsedData[eachTodoItem]}')">Delete</button></td>
       </tr>
       `;
       tableBody.innerHTML += tableRow;
@@ -30,6 +30,18 @@ button.addEventListener("click", function () {
   }
 });
 
+function deleteFunction(item) {
+  const getLocalStorageData = localStorage.getItem("myTodoList");
+  if (getLocalStorageData) {
+    let currentData = JSON.parse(getLocalStorageData);
+    console.log("first console", currentData);
+    currentData = currentData.filter((eachItem) => eachItem !== item);
+    console.log("last console", currentData);
+    let newDataForLocalStorage = JSON.stringify(currentData);
+    localStorage.setItem("myTodoList", newDataForLocalStorage);
+    window.location.reload();
+  }
+}
 function saveInputData(data) {
   const getLocalStorageData = localStorage.getItem("myTodoList");
   if (getLocalStorageData) {
